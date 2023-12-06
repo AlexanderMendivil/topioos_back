@@ -2,6 +2,7 @@ require('dotenv').config();
 import express from 'express'
 import cors from 'cors'
 import { getOneArea, getAreas, addArea, updateArea, deleteArea, changeStatus } from './services/areas.service'
+import { login, signUp } from './services/auth.service';
 import { IArea } from './interfaces/area.interface';
 const app = express()
 const port = process.env.PORT || 3001;
@@ -11,7 +12,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
+
+app.post('/login', login);
+
+app.post('/signup', signUp);
+
 app.get('/area', async (req, res) => {
+
   const areas = await getAreas()
   res.send(areas)
 })
